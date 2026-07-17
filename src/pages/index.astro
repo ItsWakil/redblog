@@ -2,7 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
-import FormattedDate from '../components/FormattedDate.astro';
+import PostCard from '../components/PostCard.astro';
 import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
 import { getCollection } from 'astro:content';
 
@@ -21,7 +21,7 @@ const posts = (await getCollection('blog'))
 		<Header />
 		<main>
 			<section class="hero">
-				<p class="eyebrow">Fantasy &amp; Creative Writing</p>
+				<p class="eyebrow">Fantasy &amp; creative writing</p>
 				<h1>Tales, worlds, and the tools used to build them.</h1>
 				<p class="dek">
 					A record of stories in progress, games taking shape, ink on paper, and the
@@ -34,18 +34,7 @@ const posts = (await getCollection('blog'))
 			<section class="latest">
 				<h2>Latest from the blog</h2>
 				<div class="grid">
-					{
-						posts.map((post) => (
-							<a class="card" href={`${base}blog/${post.id}/`}>
-								<p class="card-date">
-									<FormattedDate date={post.data.pubDate} />
-								</p>
-								<h3>{post.data.title}</h3>
-								<p class="card-desc">{post.data.description}</p>
-								<span class="read-more">Read the tale &rarr;</span>
-							</a>
-						))
-					}
+					{posts.map((post) => <PostCard post={post} />)}
 				</div>
 				<p class="all-posts"><a href={`${base}blog`}>View all posts &rarr;</a></p>
 			</section>
@@ -79,67 +68,12 @@ const posts = (await getCollection('blog'))
 		grid-template-columns: repeat(3, 1fr);
 		gap: 1.5em;
 	}
-	.card {
-		display: flex;
-		flex-direction: column;
-		background: var(--navy);
-		border: 1px solid var(--hairline);
-		padding: 1.6em;
-		text-decoration: none;
-		position: relative;
-		transition: border-color 0.2s ease, transform 0.2s ease;
-	}
-	.card:hover {
-		border-color: var(--gold);
-		transform: translateY(-3px);
-	}
-	.card::before {
-		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 14px;
-		height: 14px;
-		border-top: 1px solid var(--gold);
-		border-left: 1px solid var(--gold);
-		opacity: 0;
-		transition: opacity 0.2s ease;
-	}
-	.card:hover::before {
-		opacity: 1;
-	}
-	.card-date {
-		font-family: var(--font-display);
-		font-size: 0.65em;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		color: var(--gold);
-		margin: 0 0 0.6em;
-	}
-	.card h3 {
-		font-size: 1.4em;
-		margin-bottom: 0.4em;
-	}
-	.card-desc {
-		color: var(--parchment-dim);
-		font-size: 0.9em;
-		flex-grow: 1;
-	}
-	.read-more {
-		font-family: var(--font-display);
-		font-size: 0.65em;
-		letter-spacing: 0.1em;
-		text-transform: uppercase;
-		color: var(--gold-bright);
-		margin-top: 1em;
-	}
 	.all-posts {
 		text-align: center;
 		margin-top: 2.5em;
 		font-family: var(--font-display);
-		font-size: 0.75em;
-		letter-spacing: 0.12em;
-		text-transform: uppercase;
+		font-size: 0.95em;
+		letter-spacing: 0.02em;
 	}
 	@media (max-width: 860px) {
 		.grid {

@@ -15,7 +15,7 @@
 	--parchment-dim: #a49c86;
 	--hairline: rgba(201, 162, 39, 0.35);
 
-	--font-display: 'Cinzel', serif;
+	--font-display: 'Marcellus', serif;
 	--font-headline: 'Cormorant Garamond', serif;
 	--font-body: 'EB Garamond', serif;
 
@@ -76,9 +76,8 @@ h5 {
 
 .eyebrow {
 	font-family: var(--font-display);
-	text-transform: uppercase;
-	letter-spacing: 0.22em;
-	font-size: 0.72em;
+	letter-spacing: 0.06em;
+	font-size: 0.85em;
 	color: var(--gold);
 }
 
