@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/GalleryLayout.astro';
+
+const items = [
+	{
+		title: 'Pen One',
+		meta: 'Fountain Pen',
+		description: 'Brand, nib size, and what makes this one a favorite for drafting.',
+	},
+	{
+		title: 'Pen Two',
+		meta: 'Fountain Pen',
+		description: 'Swap in your real collection here — one card per pen, in src/pages/pens.astro.',
+	},
+	{
+		title: 'Ink & Paper Notes',
+		meta: 'Field Notes',
+		description: 'Favorite ink and paper pairings for drafting versus final copy.',
+	},
+];
+---
+
+<Layout
+	title="Pens"
+	description="A fountain pen and writing tools collection."
+	eyebrow="Ink & Nib"
+	intro="The instruments behind the words — a running collection."
+	items={items}
+/>

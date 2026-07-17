@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/GalleryLayout.astro';
+
+const items = [
+	{
+		title: 'Novel Manuscript',
+		meta: 'Fiction · Drafting',
+		description: 'A working synopsis and current status of the manuscript.',
+	},
+	{
+		title: 'Worldbuilding Bible',
+		meta: 'Reference Document',
+		description: 'Swap in your real projects here — one card per project, in src/pages/projects.astro.',
+	},
+	{
+		title: 'This Website',
+		meta: 'Web · Astro',
+		description: 'Built with Astro, deployed on GitHub Pages, always a work in progress.',
+		link: 'https://github.com/ItsWakil/redblog',
+	},
+];
+---
+
+<Layout
+	title="Projects"
+	description="Ongoing creative and technical projects."
+	eyebrow="In the Works"
+	intro="Everything currently on the workbench, from manuscripts to code."
+	items={items}
+/>

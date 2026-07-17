@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/GalleryLayout.astro';
+
+const items = [
+	{
+		title: 'Piece One',
+		meta: 'Forearm · Linework',
+		description: 'What the piece means, the artist who made it, and the story behind it.',
+	},
+	{
+		title: 'Piece Two',
+		meta: 'Sleeve · In Progress',
+		description: 'Swap in your real pieces here — one card per tattoo, in src/pages/tattoos.astro.',
+	},
+	{
+		title: 'Piece Three',
+		meta: 'Fine Line',
+		description: 'A small detail piece and the reasoning behind the placement.',
+	},
+];
+---
+
+<Layout
+	title="Tattoos"
+	description="A collection of ink, meaning, and the stories behind each piece."
+	eyebrow="Marked"
+	intro="Stories carried on skin — each piece and what it means."
+	items={items}
+/>
