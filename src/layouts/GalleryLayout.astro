@@ -1,4 +1,6 @@
 ---
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
 import BaseHead from '../components/BaseHead.astro';
 import Footer from '../components/Footer.astro';
 import Header from '../components/Header.astro';
@@ -8,6 +10,7 @@ export interface GalleryItem {
 	meta?: string;
 	description: string;
 	link?: string;
+	image?: ImageMetadata;
 }
 
 interface Props {
@@ -42,9 +45,35 @@ const { title, description, eyebrow, intro, items } = Astro.props;
 						const Tag = item.link ? 'a' : 'div';
 						return (
 							<Tag class="card" {...(item.link ? { href: item.link } : {})}>
-								{item.meta && <p class="card-meta">{item.meta}</p>}
-								<h3>{item.title}</h3>
-								<p class="card-desc">{item.description}</p>
+								<div class="card-image">
+									{item.image ? (
+										<Image src={item.image} alt="" width={480} height={360} />
+									) : (
+										<div class="placeholder">
+											<svg
+												class="placeholder-icon"
+												viewBox="0 0 24 24"
+												fill="none"
+												xmlns="http://www.w3.org/2000/svg"
+											>
+												<rect x="2.5" y="4.5" width="19" height="15" rx="1" stroke="currentColor" stroke-width="1.2" />
+												<circle cx="8" cy="10" r="1.6" stroke="currentColor" stroke-width="1.2" />
+												<path
+													d="M3 16.5L8.5 12L13 15.5L16.5 12.5L21 16.5"
+													stroke="currentColor"
+													stroke-width="1.2"
+													stroke-linejoin="round"
+												/>
+											</svg>
+											<span class="placeholder-label">Add image</span>
+										</div>
+									)}
+								</div>
+								<div class="card-body">
+									{item.meta && <p class="card-meta">{item.meta}</p>}
+									<h3>{item.title}</h3>
+									<p class="card-desc">{item.description}</p>
+								</div>
 							</Tag>
 						);
 					})
@@ -80,32 +109,86 @@ const { title, description, eyebrow, intro, items } = Astro.props;
 		margin-top: 2em;
 	}
 	.card {
-		display: block;
+		display: flex;
+		flex-direction: column;
 		background: var(--navy);
 		border: 1px solid var(--hairline);
-		padding: 1.6em;
 		text-decoration: none;
 		position: relative;
+		overflow: hidden;
 		transition: border-color 0.2s ease, transform 0.2s ease;
 	}
 	a.card:hover {
 		border-color: var(--gold);
 		transform: translateY(-3px);
 	}
-	.card::before {
+	.card::after {
 		content: '';
 		position: absolute;
 		top: 0;
 		left: 0;
 		width: 14px;
 		height: 14px;
-		border-top: 1px solid var(--gold);
-		border-left: 1px solid var(--gold);
+		border-top: 1px solid var(--gold-bright);
+		border-left: 1px solid var(--gold-bright);
 		opacity: 0;
 		transition: opacity 0.2s ease;
+		z-index: 2;
 	}
-	a.card:hover::before {
+	a.card:hover::after {
 		opacity: 1;
+	}
+	.card-image {
+		aspect-ratio: 4 / 3;
+		border-bottom: 1px solid var(--hairline);
+	}
+	.card-image :global(img) {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+		filter: saturate(0.75) sepia(0.15);
+		transition: transform 0.4s ease, filter 0.4s ease;
+	}
+	a.card:hover .card-image :global(img) {
+		transform: scale(1.05);
+		filter: saturate(0.9) sepia(0.05);
+	}
+	.placeholder {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.6em;
+		background: repeating-linear-gradient(
+			135deg,
+			var(--navy) 0px,
+			var(--navy) 10px,
+			var(--navy-light) 10px,
+			var(--navy-light) 11px
+		);
+		border: 1px dashed var(--hairline);
+		margin: 8px;
+		height: calc(100% - 16px);
+		width: calc(100% - 16px);
+	}
+	.placeholder-icon {
+		width: 2em;
+		height: 2em;
+		color: var(--gold);
+		opacity: 0.7;
+	}
+	.placeholder-label {
+		font-family: var(--font-display);
+		font-size: 0.75em;
+		letter-spacing: 0.03em;
+		color: var(--parchment-dim);
+	}
+	.card-body {
+		padding: 1.4em 1.6em 1.6em;
+		flex-grow: 1;
 	}
 	.card-meta {
 		font-family: var(--font-display);
